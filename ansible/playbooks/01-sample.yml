@@ -1,0 +1,13 @@
+- name: Play1 
+  hosts: APPSERVER 
+  tasks:
+    - name: Play1 Task1 - Check ping 
+      ping: 
+        
+
+- name: Play2
+  hosts: DBSERVER 
+  tasks:
+    - name: Play2 Task1 - Print some message 
+      debug:
+        msg: "Hello World"

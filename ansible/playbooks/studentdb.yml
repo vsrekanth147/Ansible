@@ -1,0 +1,4 @@
+- name: Create Student DB in MariaDB
+  mysql_db: 
+    name: studentapp
+    state: present

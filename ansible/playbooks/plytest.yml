@@ -1,5 +1,0 @@
--  name: test playbook
-   hosts: TESTDB
-   tasks:
-     debug:
-        msg: Hi Srikanth Reddy

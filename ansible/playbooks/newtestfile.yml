@@ -1,8 +1,0 @@
-- name: Install a package
-  hosts: TESTDB
-  become: true
-  tasks:
-    - name: Install a package
-      package:
-         name: httpd
-         state: present

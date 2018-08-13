@@ -1,8 +1,0 @@
-- name: Install a package
-  hosts: TESTDB
-  become: true
-  tasks:
-    - name : this is new package
-      package:
-         name: tomcat
-         state: present

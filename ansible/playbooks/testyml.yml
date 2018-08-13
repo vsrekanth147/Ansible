@@ -1,7 +1,0 @@
- - name: this is just a test playbook
-   hosts: TESTDB
-   task: 
-   - name: print a msg
-     debug: 
-        msg: "Hi Srikanth Reddy Vakiti"
-

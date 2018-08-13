@@ -1,0 +1,66 @@
+- name: Install and configure MariaDB
+  hosts: TESTDB
+  vars:
+    DBNAME: studentapp
+    DBUSER: student
+    DBPASS: student@1
+  become: yes
+  tasks:
+    - name: Install MariaDB Server
+      package: 
+         name: mariadb-server
+         state: present
+
+    - name: Start MariaDB Server
+      service: 
+        name: mariadb
+        state: started
+        enabled: yes
+    - name: Create Student DB in MariaDB
+      mysql_db: 
+       name: "{{DBNAME}}"
+       state: present
+
+    - name: example copying file with owner and permissions
+      copy:
+       src: files/studentapp.sql
+       dest: /tmp/studentapp.sql
+       
+    - name: Create DB Schema
+      mysql_db:
+        state: import
+        name: all
+        target: /tmp/studentapp.sql
+
+    - name: Create DB user
+      mysql_user:
+       name: "{{DBUSER}}"
+       password: "{{DBPASS}}"
+       priv: "{{DBNAME}}.*:ALL,GRANT"
+       state: present
+
+    - name: Install and Configure Tomcat
+      hosts: APPSERVER
+      become: yes 
+         vars:
+           TURL: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32-deployer.tar.gz
+     tasks: 
+    - name: Install Java
+      package:
+        name: java
+        state: installed  
+
+    - name: Get tar file
+      shell: echo {{TURL}} | awk -F / '{print $NF} 
+      register: out
+
+    - name: Define TAR File Variable
+      set_fact: 
+        T_TAR_LOC: "{{out.stdout}}"
+
+    - name: Download Tomcat
+      get_url: 
+        url: "{{TURL}}"
+        dest: "/opt/{{T_TAR_LOC}}"
+
+

@@ -1,0 +1,8 @@
+- name: Install a Package 
+  hosts: DBSERVER
+  become: true  
+  tasks: 
+    - name: Install a Package 
+      package: 
+        name: gcc 
+        state: present 
